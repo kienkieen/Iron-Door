@@ -1,0 +1,133 @@
+﻿@model Nhom12_Website_Ban_Cua.Models.EF.NguoiDung
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutUserAccount.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger text-center" style="width: 500px; margin: 15px auto; text-transform: uppercase; font-size: 18px;">@ViewBag.ErrorMessage</div>
+}
+<div class="login">
+    <h1 class="position-relative text-uppercase mb-4"><span class="pr-3">ĐĂNG NHẬP </span></h1>
+    <div class="row" style="box-sizing: border-box; align-items: stretch; display: flex;">
+        <div class="col-sm-12 col-lg-5">
+            <div style="background-color: white; padding: 20px; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1)">
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "UserAccount", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h4>Sử dụng tài khoản khách hàng để đăng nhập.</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group ">
+                            <p class="control-label">Tên Tài Khoản</p>
+                            <input id="tentaikhoan" name="tentaikhoan" type="text" class="form-control" value="@ViewBag.TenTaiKhoan">
+                        </div>
+                        <div class="form-group matkhau">
+                            <p class="control-label">Mật Khẩu</p>
+                            <div class="">
+                                <input id="matkhau" name="matkhau" type="password" class="form-control">
+                                <span class="show-hide"><i class="fas fa-eye"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn-login form-submit btn-blocker custom-btn w-100 mt-3 bg-secondary" style="border-radius: unset; margin: unset; color: white; padding: 10px 20px;">
+                                ĐĂNG NHẬP
+                            </button>
+                        </div>
+                        <div class="row m-1">
+                            <span>
+                                @*@Html.ActionLink("Bạn quên mật khẩu?", "Register", new { @style = "text-decoration: none !important;" })*@
+                                <a href="" class="forgot-password">Bạn quên mật khẩu?</a>
+                            </span>
+                        </div>
+                        <div class="position-relative" style="display: flex; justify-content: center;">
+                            <div style="border: 1px solid #d1d1d1; width: 100%;"></div>
+                            <p class="position-absolute bg-white px-2" style="top: -12px;">HOẶC</p>
+                        </div>
+                        <div class="form-social" style="margin-bottom: 15px;">
+                            <a href="#" onclick="openFacebook()" target="_self" class="form-submit-social btn-blocker">
+                                <img src="~/Content/img/icon/facebook.svg" alt="" class="form-submit-social--img">
+                                <span>Facebook</span>
+                            </a>
+                            <a href="#" onclick="openGoogle()" class="form-submit-social btn-blocker">
+                                <img src="~/Content/img/icon/google.svg" alt="" class="form-submit-social--img">
+                                <span>Google</span>
+                            </a>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-7">
+            <div style="background-color: white; padding: 20px; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); height: 100%;">
+                <h3 class="heading mb-3">TẠO MỘT TÀI KHOẢN</h3>
+                <p class="text-login">Thật dễ dàng tạo một tài khoản. Hãy nhập địa chỉ email của bạn và điền vào mẫu trên trang tiếp theo và tận hưởng những lợi ích của việc sở hữu một tài khoản:</p>
+                <ul>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Tổng quan đơn giản về thông tin cá nhân của bạn</p>
+                    </li>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Thanh toán nhanh hơn</p>
+                    </li>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Ưu đãi và khuyến mãi độc quyền</p>
+                    </li>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Các sản phẩm mới nhất</p>
+                    </li>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</p>
+                    </li>
+                    <li class="text-login-item">
+                        <i class="fas fa-check"></i>
+                        <p class="text-login">Các sự kiện sắp tới</p>
+                    </li>
+                </ul>
+                <div class="row justify-content-center">
+                    <a href="@Url.Action("Register", "UserAccount")" class="btn-register form-submit btn-blocker custom-btn w-50 bg-secondary">
+                        ĐĂNG KÍ <i class="fas fa-arrow-right" style="font-size: 16px; margin-left: 10px;"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    const pass_field = document.querySelector('#matkhau');
+    const show_btn = document.querySelector('.fa-eye');
+    show_btn.addEventListener("click", function () {
+        if (pass_field.type === "password") {
+            pass_field.type = "text";
+            show_btn.classList.add("hide");
+        } else {
+            pass_field.type = "password";
+            show_btn.classList.remove("hide");
+        }
+    });
+
+    function openFacebook() {
+        window.open("https://www.facebook.com", "Facebook", "width=550,height=600");
+    }
+    function openGoogle() {
+        window.open("https://accounts.google.com", "Google", "width=550,height=600");
+    }
+</script>

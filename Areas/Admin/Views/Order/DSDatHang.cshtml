@@ -1,0 +1,140 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.DatHang>
+
+@{
+    ViewBag.Title = "DSDatHang";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="">Danh Sách Đơn Hàng</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã Đơn Hàng</th>
+                        <th>Khách Hàng</th>
+                        <th>SDT</th>
+                        <th>Thành Tiền</th>
+                        <th>Ngày Tạo</th>
+                        <th>Trạng Thái</th>
+                        <th>Phương Thức</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaDonDatHang</td>
+                                <td>@item.NguoiDung.TenTaiKhoan</td>
+                                <td>@item.NguoiDung.SDT</td>
+                                <td>@FormatCurrency((double)item.TongTienThanhToan)</td>
+                                <td>@item.NgayDatHang</td>
+                                <td>@item.TrangThai.TenTrangThai</td>
+                                <td>@item.PhuongThucThanhToan</td>
+
+                                <td>
+                                    <a href="/admin/order/vieworder/@item.MaDonDatHang" class="btn btn-sm btn-success">Xem</a>
+                                    <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.MaDonDatHang">Cập Nhật</a>
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhật trạng thái</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="txtOrderId" value="0" />
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select class="form-control" id="ddTrangThai">
+                        <option value="1">
+                            Chưa thanh toán
+                        </option>
+                        <option value="2">
+                            Đã thanh toán
+                        </option>
+                        <option value="3">
+                            Hoàn Thành
+                        </option>
+                        <option value="4">
+                            Hủy
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="btnLuu">Lưu</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnCapNhat', function () {
+                var id = $(this).data("id");
+                $('#txtOrderId').val(id);
+                $('#modal-default').modal('show');
+            });
+
+            $('body').on('click', '#btnLuu', function () {
+                var id = $('#txtOrderId').val();
+                var tt = $('#ddTrangThai').val();
+                $.ajax({
+                    url: '/admin/order/UpdateTT',
+                    type: 'POST',
+                    data: { id: id, trangthai: tt },
+                    success: function (res) {
+                        if (res.Success) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

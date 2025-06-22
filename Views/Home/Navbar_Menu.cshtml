@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.Loai>
+
+
+<a href="/Products/Index" class="nav-link">
+    Sản Phẩm
+    <i class="fa fa-angle-down"></i>
+</a>
+<div class="dropdown_selection ">
+    @foreach (Nhom12_Website_Ban_Cua.Models.EF.Loai loai in Model)
+    {
+        <div><a href="@Url.Action("Navbar_TheoLoaiSP", "Products", new { maSP = @loai.MaLoai })">@loai.TenLoai</a></div>
+    }
+</div>
+    
+

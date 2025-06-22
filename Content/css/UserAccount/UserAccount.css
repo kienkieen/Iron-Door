@@ -1,0 +1,141 @@
+﻿
+.text-login {
+    font-size: 16px;
+    color: #101920;
+    margin: unset;
+}
+
+ul {
+    list-style: none;
+}
+
+.text-login-item {
+    display: flex;
+    margin: 19px;
+    align-items: center;
+}
+
+.fa-check {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+
+.login, .register {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.control-label,
+.form-check {
+    color: black;
+}
+
+.forgot-password {
+    text-decoration: none !important;
+    display: block;
+    margin-bottom: 10px;
+    color: gray;
+}
+
+.btn-register {
+    border-radius: unset;
+    margin: unset;
+    background-color: dimgrey;
+    color: white !important;
+    padding: 10px 20px;
+    text-decoration: none !important;
+    text-align: center;
+}
+
+.forgot-password:hover {
+    color: black !important;
+    text-decoration: none !important;
+    Đảm bảo gạch chân không xuất hiện khi hover
+}
+.btn-login:hover,
+.btn-register:hover {
+    background-color: black !important;
+}
+
+.form-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-submit-social {
+    background: none;
+    color: black;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border: 1px solid gray;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s linear;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .form-submit-social::before {
+        background-color: black;
+        width: 100%;
+        content: "";
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transition: transform 0.5s;
+        z-index: -1;
+        transform-origin: 0 0;
+        transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
+        transform: scaleX(0);
+    }
+
+    .form-submit-social:hover {
+        text-decoration: none;
+        background-color: #e8e8e8;
+        color: black;
+    }
+
+        .form-submit-social:hover::before {
+            transform: scaleX(1);
+        }
+
+    .form-submit-social span {
+        font-size: 16px;
+        font-weight: 500;
+        vertical-align: middle;
+    }
+
+    .form-submit-social:first-child {
+        margin-right: 40px;
+    }
+
+.form-submit-social--img {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin: 5px;
+}
+
+/***EYE*(*/
+.form-group {
+    position: relative;
+}
+
+.show-hide {
+    position: absolute;
+    top: 56px;
+    right: 10px;
+    transform: translateY(-35%);
+}
+    .show-hide i {
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+.fa-eye:not(.hide):before {
+    content: '\f070';
+}

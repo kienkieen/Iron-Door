@@ -1,0 +1,78 @@
+﻿@model Nhom12_Website_Ban_Cua.Models.EF.NguoiDung
+
+@{
+    ViewBag.Title = "ThongTinNguoiDung";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section CustomCSS {
+    <link href="~/Content/css/UserAccount/Information.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+}
+<div class="container-fluid position-relative bg-light d-flex p-0 user_account pb-5">
+    <!-- Sidebar Start -->
+    <div class="sidebar pb-3 col-3 pl-0  bg-white position-sticky sdb-2" style="min-height: 100%;">
+        <nav class="navbar navbar-light">
+            <div class="d-flex align-items-center ml-3 mb-3 mt-3">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="~/Content/img/icon/user.jpg" alt="" style="width: 40px; height: 40px; object-fit:contain;">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute p-1" style="right:0px; bottom: 0px;"></div>
+                </div>
+                <div class="ml-4">
+                    <h6 class="mb-0">@Model.TenTaiKhoan</h6>
+                    <span>User</span>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a href="#" class="nav-item nav-link menu-chitiet active" data-url="/UserAccount/Partial_HoSo"><i class="fas fa-user mr-2"></i>Hồ Sơ</a>
+                <a href="#" class="nav-item nav-link menu-chitiet" data-url="/UserAccount/Partial_DoiMatKhau"><i class="fas fa-key mr-2"></i>Đổi Mật Khẩu</a>
+                <a href="#" class="nav-item nav-link menu-chitiet" data-url="/UserAccount/Partial_LSGiaoHang"><i class="fas fa-shopping-bag mr-2"></i>Lịch Sử Mua Hàng</a>
+                <a href="#" class="nav-item nav-link menu-chitiet" data-url="/UserAccount/Partial_DonHangDangGiao"><i class="fas fa-truck mr-2"></i>Đơn Hàng Đang Giao</a>
+                <a href="#" class="nav-item nav-link menu-chitiet" data-url="/UserAccount/Partial_HoSo"><i class="fas fa-heart mr-2"></i>Danh Sách Yêu Thích</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar End -->
+    <!-- Content Start -->
+    <div class="content col-9 pb-3">
+        <!-- Navbar Start -->
+        <!-- Other Elements Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row  sdb-2" style="background-color: white;">
+                <div class="" style="padding: 30px; width: 100%; margin: 0 auto;">
+                    <div id="partial-container">
+                        @Html.Action("Partial_HoSo", "UserAccount")
+                    </div>
+
+                    
+
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Other Elements End -->
+
+    </div>
+    <!-- Content End -->
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="~/Scripts/js/useraccount.js?v=@DateTime.Now.Ticks"></script>
+<script>
+    $(document).ready(function () {
+        // Bắt sự kiện click vào các mục menu
+        $('.menu-chitiet').click(function (e) {
+            e.preventDefault(); // Ngăn hành vi mặc định của liên kết
+
+            // Xóa class active-menu khỏi tất cả các mục menu
+            $('.menu-chitiet').removeClass('active');
+
+            // Thêm class active-menu vào mục menu hiện tại
+            $(this).addClass('active');
+
+        });
+    });
+</script>

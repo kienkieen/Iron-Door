@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "XacNhanThanhToan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+else
+{
+<div class="bg-white p-2" style="margin: 50px">
+    <h2 class="text-center">@ViewBag.SuccessMessage</h2>
+    <h4 class="text-center mt-3">
+        Quay về trang
+        <a style="text-decoration: none;" href="/Home/Index">Sản Phẩm</a>
+    </h4>
+</div>
+    
+
+}
+
+

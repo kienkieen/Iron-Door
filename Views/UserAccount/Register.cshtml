@@ -1,0 +1,98 @@
+﻿@model Nhom12_Website_Ban_Cua.Models.EF.NguoiDung
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutUserAccount.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger text-center" style="width: 500px; margin: 15px auto; text-transform: uppercase; font-size: 18px;">@ViewBag.ErrorMessage</div>
+}
+<div class="register">
+    <h1 class="position-relative text-uppercase mb-4 text-center"><span class="pr-3">ĐĂNG KÝ </span></h1>
+    <div class="row">
+        <div style="background-color: white; padding: 20px; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); width: 50%; margin: 0 auto;">
+            @using (Html.BeginForm("Register", "UserAccount", FormMethod.Post))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    <p class="control-label">Tên Đầy Đủ</p>
+                    <div>
+                        <input id="fullname" name="hoten" type="text" placeholder="VD: Thảo Ly" class="form-control" value="@Request.Form["hoten"]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="control-label">Email</p>
+                    <div>
+                        <input id="email" name="email" type="text" placeholder="VD: abcd78@gmail.com" class="form-control" value="@Request.Form["email"]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="control-label">Số điện thoại</p>
+                    <div>
+                        <input id="sdt" name="sdt" type="text" class="form-control" value="@Request.Form["sdt"]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="control-label">Địa chỉ</p>
+                    <div>
+                        <input id="diachi" name="diachi" type="text" class="form-control" value="@Request.Form["diachi"]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="control-label">Tên Tài Khoản</p>
+                    <div>
+                        <input id="username" name="tentaikhoan" type="text" class="form-control" value="@Request.Form["tentaikhoan"]">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <p class="control-label">Mật Khẩu</p>
+                    <div>
+                        <input id="matkhau_dk" name="matkhau_dk" type="password" class="form-control">
+                        <span class="show-hide"><i class="fas fa-eye"></i></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <p class="control-label">Nhập Lại Mật Khẩu</p>
+                    <div>
+                        <input id="xacnhan_matkhau" name="xacnhan_matkhau" type="password" class="form-control">
+                        <span class="show-hide"><i class="fas fa-eye fa-eye-2"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn-login form-submit btn-blocker custom-btn w-100 mt-3" style="border-radius: unset; margin: unset; background-color: dimgrey; color: white; padding: 10px 20px;">
+                        ĐĂNG KÝ
+                    </button>
+                </div>
+            }
+
+            <script>
+                // Show/hide password functionality
+                const pass_field = document.querySelector('#matkhau_dk');
+                const show_btn = document.querySelector('.fa-eye');
+                show_btn.addEventListener("click", function () {
+                    if (pass_field.type === "password") {
+                        pass_field.type = "text";
+                        show_btn.classList.add("hide");
+                    } else {
+                        pass_field.type = "password";
+                        show_btn.classList.remove("hide");
+                    }
+                });
+
+                const pass_field2 = document.querySelector('#xacnhan_matkhau');
+                const show_btn2 = document.querySelector('.fa-eye-2');
+                show_btn2.addEventListener("click", function () {
+                    if (pass_field2.type === "password") {
+                        pass_field2.type = "text";
+                        show_btn2.classList.add("hide");
+                    } else {
+                        pass_field2.type = "password";
+                        show_btn2.classList.remove("hide");
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</div>

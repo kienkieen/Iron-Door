@@ -1,0 +1,58 @@
+﻿@using Nhom12_Website_Ban_Cua.Models.EF
+@model List<ChiTietDatHang>
+
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+@helper Truncate(string input, int length)
+{
+    if (input.Length < length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)
+        <text>.... </text>
+    }
+}
+<a href="/UserAccount/ThongTinNguoiDung" style="font-size: 18px;">Quay Về</a>
+<h1 class="position-relative text-uppercase mb-4 text-center" style="border-bottom: 2px solid gray; margin: 10px 330px; padding-bottom: 10px;"><span class="pr-3">CHI TIẾT ĐƠN HÀNG</span></h1>
+
+<div class="col-lg-12 col-md-12 mb-4">
+    <div class="table-responsive bg-white" style="width: 70%; margin: 0 auto;">
+
+        <table class="table table-borderless table-hover text-center mb-0">
+            <thead style="font-weight: 400; color: black !important; border-bottom: 2px solid #F4F5F8 ">
+                <tr>
+                    <th style="width: 50%;">Sản Phẩm</th>
+                    <th style="width: 30%;">Số Lượng</th>
+                    <th style="width: 30%;">Giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ChiTietDatHang ct in Model)
+                {
+                    <tr style="border-bottom: 1px solid #F4F5F8;">
+                        <td class="" align="left">
+                            <img src="~/Content/img/Anh_Lon/@ct.SanPham.AnhLon" alt="" style="width: 50px; margin-right: 10px;">@ct.SanPham.TenSP
+                        </td>
+                        <td class="align-middle">@ct.SoLuong</td>
+                        <td class="align-middle">@FormatCurrency((double)ct.Gia)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="btn btn-primary mt-4" style="float: right;">@FormatCurrency((double)ViewBag.TongTien)</div>
+
+    </div>
+</div>
+
+<link href="~/Content/css/Product/Product.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+<link href="~/Content/css/bootstrap.min.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+<link href="~/Content/css/style.css?v=@DateTime.Now.Ticks" rel="stylesheet" />

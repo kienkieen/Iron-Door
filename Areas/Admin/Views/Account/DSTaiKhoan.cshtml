@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.NguoiDung>
+
+@{
+    ViewBag.Title = "DSTaiKhoan";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="">Danh Sách Tài Khoản</h3>
+
+            <div class="card-tools">
+                <a href="/admin/account/create" class="btn btn-success">Thêm Mới</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tài Khoản</th>
+                        <th>Họ Tên</th>
+                        <th>SDT</th>
+                        <th>Email</th>
+                        <th>Quyền</th>
+                        <th style="text-align:center">Trạng Thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaNguoiDung</td>
+                                <td>@item.TenTaiKhoan</td>
+                                <td>@item.TenNguoiDung</td>
+                                <td>@item.SDT</td>
+                                <td>@item.Email</td>
+                                <td>@string.Join(", ", item.MaLoaiNguoiDung)</td>
+                                <td><button type="button" class="btn btn-success" style="margin-left:60px">Khoá</button></td>
+                                <td>
+                                    <a href="/admin/account/edit/@item.MaNguoiDung" class="btn btn-sm btn btn-primary">Cập Nhật</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">Không Có Bản Ghi Nào</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+ 
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->

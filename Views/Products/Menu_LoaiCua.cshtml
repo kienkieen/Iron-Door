@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.Loai>
+
+<div class="bg-white p-4 mb-4 sdb-2">
+    <form id="form-loai">
+        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+            <input type="radio" class="custom-control-input" id="loai_tatca" name="loai" value="0" onchange="loadSanPhamByLoai(0)">
+            <label class="custom-control-label" for="loai_tatca">Tất cả</label>
+        </div>
+        @foreach (var l in Model)
+        {
+            <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                <input type="radio" class="custom-control-input filter-radio" id="loai-@l.MaLoai" name="loai" value="@l.MaLoai" onchange="loadSanPhamByLoai(@l.MaLoai)">
+                <label class="custom-control-label" for="loai-@l.MaLoai">@l.TenLoai</label>
+            </div>
+        }
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+        function loadSanPhamByLoai(loaiSP) {
+        $.ajax({
+            url: '@Url.Action("SanPhamTheoLoai", "Products")', // Đảm bảo URL chính xác
+            type: 'GET',
+            data: { loaiSP: loaiSP }, // Gửi loại sản phẩm được chọn
+            success: function (result) {
+                $('#product-list').html(result); // Cập nhật phần sản phẩm trong view
+            }
+        });
+    }
+</script>
+
+
+@*<script>
+        $(document).ready(function () {
+            // Luôn hiển thị icon của thẻ "Tất cả" mỗi khi tải lại trang
+            $("#all i").show();
+
+            // Ẩn tất cả các icon <i> của các thẻ khác
+            $(".menu-link i").not("#all i").hide();
+
+            // Kiểm tra nếu có thông tin lưu trong localStorage về thẻ được nhấn
+            var selectedLoai = localStorage.getItem("selectedLoai");
+
+            // Nếu có thông tin, hiển thị icon cho thẻ đó, nhưng không ảnh hưởng đến thẻ "Tất cả"
+            if (selectedLoai && selectedLoai !== "all") {
+                $("#" + selectedLoai + " i").show();
+            }
+
+            // Khi nhấn vào một thẻ <a>
+            $(".menu-link").click(function () {
+                // Ẩn tất cả các icon <i> trong các thẻ <a>
+                $(".menu-link i").hide();
+
+                // Hiển thị icon <i> trong thẻ <a> vừa nhấn
+                $(this).find("i").show();
+
+                // Lưu trạng thái của thẻ đã nhấn vào localStorage
+                var loaiSP = $(this).attr("id");  // Lấy id của thẻ <a> vừa nhấn
+                localStorage.setItem("selectedLoai", loaiSP);  // Lưu vào localStorage
+            });
+        });
+    </script>*@
+
+

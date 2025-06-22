@@ -1,0 +1,42 @@
+﻿@using Nhom12_Website_Ban_Cua.Models
+@model GioHang
+
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+
+@helper Truncate(string input, int length)
+{
+    if (input.Length < length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)
+        <text>.... </text>
+    }
+}
+
+<div class="table-responsive bg-white ">
+    <table class="table table-borderless table-hover text-center mb-0">
+        @foreach (CartItem sp in Model.lst)
+        {
+            <tr style="border-bottom: 1px solid #F4F5F8;">
+                <td class="" align="left">
+                    <img src="~/Content/img/Anh_Lon/@sp.anhSP" alt="" style="width: 100px;"> @Truncate(sp.tenSP, 30)
+                </td>
+                <td  class="align-middle">x @sp.soLuong</td>
+                <td class="align-middle">@FormatCurrency(sp.ThanhTien)</td>
+            </tr>
+        }
+        <tr style="border-bottom: 1px solid #F4F5F8;">
+            <td colspan="4" style="float: right" class="btn btn-primary">Tổng Tiền: @FormatCurrency(ViewBag.tongTien)</td>
+        </tr>
+    </table>
+</div>

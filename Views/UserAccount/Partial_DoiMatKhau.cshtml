@@ -1,0 +1,82 @@
+﻿@model Nhom12_Website_Ban_Cua.Models.EF.NguoiDung
+
+
+<div id="updatePasswordForm">
+    <h1 class="position-relative text-uppercase mb-4 text-center" style="border-bottom: 2px solid gray; margin: 10px 330px; padding-bottom: 10px;"><span class="pr-3">ĐỔI MẬT KHẨU MỚI </span></h1>
+    <form id="passwordForm" method="post">
+        <div class=" justify-content-center row">
+            <div class="form-group col-md-7">
+                <p class="control-label">Mật Khẩu</p>
+                <div>
+                    <input id="mk" name="matkhau" type="password" class="form-control" required>
+                    <span class="show-hide"><i class="fas fa-eye hide"></i></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-7">
+                <p class="control-label">Mật Khẩu Mới</p>
+                <div>
+                    <input id="mkm" name="matkhaumoi" type="password" class="form-control required">
+                    <span class="show-hide-two"><i class="fas fa-eye fa-eye-2 hide"></i></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-7">
+                <p class="control-label">Nhập lại mật khẩu mới</p>
+                <div>
+                    <input id="xnmkm" name="xacnhanmkmoi" type="password" class="form-control" required>
+                    <span class="show-hide-three"><i class="fas fa-eye fa-eye-3 hide"></i></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group d-flex justify-content-center">
+            <button class="btn-login form-submit btn-blocker custom-btn mt-3" onclick="updatePassword(this)" type="button" style="border-radius: unset; margin: 0 auto; width: 150px; background-color: dimgrey; color: white; padding: 10px 20px;">
+                Cập Nhật
+            </button>
+        </div>
+    </form>
+
+    <div id="resultMessage" class="mt-3"></div>
+</div>
+
+<script>
+
+    const pass_field = document.querySelector('#mk');
+    const show_btn = document.querySelector('.fa-eye')
+    show_btn.addEventListener("click", function () {
+        if (pass_field.type === "password") {
+            pass_field.type = "text";
+            show_btn.classList.remove("hide");
+        } else {
+            pass_field.type = "password";
+            show_btn.classList.add("hide");
+        }
+    });
+
+    const pass_field2 = document.querySelector('#mkm');
+    const show_btn2 = document.querySelector('.fa-eye-2')
+    show_btn2.addEventListener("click", function () {
+        if (pass_field2.type === "password") {
+            pass_field2.type = "text";
+            show_btn2.classList.remove("hide");
+        } else {
+            pass_field2.type = "password";
+            show_btn2.classList.add("hide");
+        }
+    });
+
+    const pass_field3 = document.querySelector('#xnmkm');
+    const show_btn3 = document.querySelector('.fa-eye-3')
+    show_btn3.addEventListener("click", function () {
+        if (pass_field3.type === "password") {
+            pass_field3.type = "text";
+            show_btn3.classList.remove("hide");
+        } else {
+            pass_field3.type = "password";
+            show_btn3.classList.add("hide");
+        }
+    });
+</script>
+<script src="~/Scripts/js/useraccount.js?v=@DateTime.Now.Ticks"></script>

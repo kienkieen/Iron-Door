@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.SanPham>
+
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+<!--  -->
+<div class="row">
+    @foreach (var item in Model)
+    {
+            <div class="col-lg-3 col-md-6 mb-2" onclick="location.href='@Url.Action("ChiTietSanPham", "Products", new { id = item.MaSP })'">
+                <div class="rent-item mb-4">
+                    <div class="sale-off">
+                        <p class="sale-off-percent">-@item.GiamGia%</p>
+                    </div>
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="~/Content/img/Anh_Nho/@item.AnhLon" alt="">
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="event.stopPropagation(); addToCart(@item.MaSP)">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            <a class="btn btn-outline-dark btn-square" href="javascript:void(0);" onclick="event.stopPropagation();"><i class="far fa-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center pt-4">
+                        <h4 class="text-uppercase mb-2 text-truncate" style="font-size: 16px !important;">@item.TenSP</h4>
+                        <div class="align-items-center mt-2" style="display: flex; justify-content: center;">
+                            <p class="new-price">  @FormatCurrency((double)(item.Gia - item.Gia * item.GiamGia / 100)) </p>
+                            <p class="text-muted ml-2 old-price">@FormatCurrency((double)@item.Gia)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+<!-- End Maybe You Like -->

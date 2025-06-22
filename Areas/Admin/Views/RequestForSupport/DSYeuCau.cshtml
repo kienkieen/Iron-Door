@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.YeuCauHoTro>
+
+@{
+    ViewBag.Title = "DSYeuCau";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="">DANH SÁCH YÊU CẦU HỖ TRỢ</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã Yêu Cầu</th>
+                        <th>Khách Hàng</th>
+                        <th>Nội Dung</th>
+                        <th>Trạng Thái</th>
+                        <th>Ngày Gửi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaYeuCau</td>
+                                <td>@item.NguoiDung.TenTaiKhoan</td>
+                                <td>@item.NoiDung</td>
+                                <td>@item.TrangThai.TenTrangThai</td>
+                                <td>@item.NgayYeuCau</td>
+
+                                <td>
+                                    <a href="/admin/order/vieworder/@item.MaYeuCau" class="btn btn-sm btn-success">Xem</a>
+                                    <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.MaYeuCau">Cập Nhật</a>
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhật trạng thái</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="txtOrderId" value="0" />
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select class="form-control" id="ddTrangThai">
+                        <option value="1">
+                            Chưa thanh toán
+                        </option>
+                        <option value="2">
+                            Đã thanh toán
+                        </option>
+                        <option value="3">
+                            Hoàn Thành
+                        </option>
+                        <option value="4">
+                            Hủy
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="btnLuu">Lưu</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

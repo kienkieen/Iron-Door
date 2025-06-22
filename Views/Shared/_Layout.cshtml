@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <!-- Template Stylesheet -->
+    <link href="~/Content/css/style.css?v=@DateTime.Now.Ticks" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/css/HomePage/Index.css?v=@DateTime.Now.Ticks">
+    <link href="~/Content/css/Product/Product.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+    <link href="~/Content/lib/animate/animate.min.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+    @RenderSection("CustomCSS", false)
+</head>
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark py-3 px-lg-5 d-none d-lg-block">
+        <div class="row">
+            <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-body pr-3" href=""><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</a>
+                    <span class="text-body">|</span>
+                    <a class="text-body px-3" href=""><i class="fa fa-envelope mr-2"></i>nhmvan963@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-body pl-3 pr-5" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+
+                    <div class="dropdown pr-3">
+                        <a href="javascript:void(0);" id="accountDropdown" onclick="toggleDropdown(event)">
+                            Tài Khoản
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        @if (Session["TaiKhoan"] == null)
+                        {
+                            <div class="dropdown_selection">
+                                <div><a href="@Url.Action("Login", "UserAccount")"><i class="fas fa-sign-in-alt" aria-hidden="true"></i>Đăng Nhập</a></div>
+                                <div><a href="@Url.Action("Register", "UserAccount")"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng Ký</a></div>
+                                <div><a href="@Url.Action("AdminLogin", "Account", new { area = "Admin" })"><i class="fa fa-user-plus" aria-hidden="true"></i>Admin</a></div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown_selection">
+                                <div><a href="@Url.Action("ThongTinNguoiDung", "UserAccount")">Thông tin tài khoản</a></div>
+                                <div><a href="@Url.Action("Logout", "UserAccount")"><i class="fas fa-sign-in-alt" aria-hidden="true"></i>Đăng Xuất</a></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="position-relative px-lg-5" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
+                <a href="/Home/Index" class="text-decoration-none col-lg-3">
+                    <span class="h1 text-uppercase text-primary bg-transparent px-2">Fune</span>
+                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Jor</span>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse px-3 col-lg-6" id="navbarCollapse">
+                    <div class="navbar-nav m-auto py-0">
+                        <div class="navbar-nav m-auto py-0">
+                            <a href="/Home/Index" class="nav-item nav-link">Trang Chủ</a>
+                            <a href="/Home/GioiThieu" class="nav-item nav-link">Giới Thiệu</a>
+
+                            <div class=" menu_product pr-3">
+                                @Html.Action("Navbar_Menu", "Home")
+                            </div>
+                        </div>
+                        <a href="/Home/LienHe" class="nav-item nav-link">Liên Hệ</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 text-right item_account_header" style="display: flex; justify-content: right; column-gap: 30px; padding: 0px 30px;">
+                    <div class="item-car clearfix ">
+                        <a href="/ShoppingCart/XemGioHang" class="header__second__cart--icon">
+                            <i class="bi bi-cart"></i>
+                            <span class="header__second__cart--notice" id="header__second__cart--notices">
+                                @((Session["SoLuongHangGH"] != null) ? Session["SoLuongHangGH"].ToString() : "0")
+                            </span>
+                        </a>
+                    </div>
+                    <div class="item-like clearfix">
+                        <a href="#" class="header__second__like--icon">
+                            <i class="bi bi-heart"></i>
+                            <span class="header__second__like--notice">0</span>
+                        </a>
+                    </div>
+                    <div class="item-noti clearfix">
+                        <a href="#" class="header__second__noti--icon">
+                            <i class="bi bi-bell"></i>
+                            <span class="header__second__noti--notice">0</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    <!-- Search Start -->
+    <div class="container-fluid bg-white pt-3 px-lg-5 sdb-4">
+        <div class="row align-items-center pb-3 px-xl-5 d-none d-lg-flex">
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-4 col-6 text-left">
+                <form action="@Url.Action("Index", "Products")" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="Searchtext" placeholder="Tìm kiếm sản phẩm" value="@Request.QueryString["Searchtext"]" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <div class="body-content bg-light">
+        @RenderBody()
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Liên Hệ</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-white mr-3"></i>140 Lê Trọng Tấn, Tây Thạnh, Tân Phú, TP. HCM</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-white mr-3"></i>+012 345 67890</p>
+                <p><i class="fa fa-envelope text-white mr-3"></i>nhmvan963@gmail.com</p>
+                <h6 class="text-uppercase text-white py-2">Theo Dõi Chúng Tôi</h6>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="https://x.com/?lang=vi"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square" href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Liên Kết Nhanh</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-body mb-2" href="/Home/Index"><i class="fa fa-angle-right text-white mr-2"></i>Trang chủ</a>
+                    <a class="text-body mb-2" href="/Home/GioiThieu"><i class="fa fa-angle-right text-white mr-2"></i>Giới thiệu</a>
+                    <a class="text-body mb-2" href="@Url.Action("Index", "Products")"><i class="fa fa-angle-right text-white mr-2"></i>Sản phẩm</a>
+                    <a class="text-body mb-2" href="/Home/Contact"><i class="fa fa-angle-right text-white mr-2"></i>Liên hệ</a>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Chính Sách Hỗ Trợ</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-body mb-2" href="#"><i class="fa fa-angle-right text-white mr-2"></i>Chính sách bảo hành</a>
+                    <a class="text-body mb-2" href="#"><i class="fa fa-angle-right text-white mr-2"></i>Chính sách đổi trả</a>
+                    <a class="text-body mb-2" href="#"><i class="fa fa-angle-right text-white mr-2"></i>Chính sách thanh toán</a>
+                    <a class="text-body mb-2" href="#"><i class="fa fa-angle-right text-white mr-2"></i>Chính sách giao nhận hàng</a>
+                    <a class="text-body mb-2" href="#"><i class="fa fa-angle-right text-white mr-2"></i>Chính sách bảo mật</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Đăng Ký Nhận Thông Tin</h4>
+                <p class="mb-4">Đăng ký để nhận tin tức mới nhất về sản phẩm và các chương trình khuyến mãi từ chúng tôi.</p>
+                <div class="w-100 mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-dark border-dark" style="padding: 25px;" placeholder="Email">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary text-uppercase px-3">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+                <i>Chúng tôi cam kết bảo mật thông tin của bạn.</i>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark py-4 px-sm-3 px-md-5">
+        <p class="mb-2 text-center text-body">&copy; <a href="#">Fune Jor</a>. All Rights Reserved.</p>
+
+        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+        <p class="m-0 text-center text-body">Designed by <a href="https://htmlcodex.com">FuneJor</a></p>
+    </div>
+    <!-- Footer End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/Scripts/js/main.js?v=@DateTime.Now.Ticks"></script>
+    <script src="~/Scripts/js/productspage.js?v=@DateTime.Now.Ticks"></script>
+
+</body>
+</html>
+// Thêm vào cuối file view Products của bạn hoặc trong section scripts
+
+<script>
+function addToCart(productId) {
+    $.ajax({
+        url: '@Url.Action("ThemHang", "ShoppingCart")',
+        type: 'GET',
+        data: { maSP: productId },
+        success: function(response) {
+            if (response.success) {
+                // Hiển thị thông báo thành công
+                showNotification('success', response.msg);
+
+                // Cập nhật số lượng giỏ hàng trên header nếu có
+                updateCartCount(response.count);
+
+                // Có thể reload lại partial view giỏ hàng nếu cần
+                // $('#cart-partial').load('@Url.Action("_Partial_GioHang", "ShoppingCart")');
+            } else {
+                // Hiển thị thông báo lỗi
+                showNotification('error', response.msg);
+
+                // Nếu cần redirect (ví dụ: chưa đăng nhập)
+                if (response.redirect) {
+                    setTimeout(function() {
+                        window.location.href = response.redirect;
+                    }, 2000);
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            showNotification('error', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!');
+            console.error('Error:', error);
+        }
+    });
+}
+
+// Hàm hiển thị thông báo động
+function showNotification(type, message) {
+    // Xóa thông báo cũ nếu có
+    $('.dynamic-notification').remove();
+
+    let alertClass = '';
+    let icon = '';
+
+    switch(type) {
+        case 'success':
+            alertClass = 'alert-success';
+            icon = 'fas fa-check-circle';
+            break;
+        case 'error':
+            alertClass = 'alert-danger';
+            icon = 'fas fa-exclamation-circle';
+            break;
+        case 'info':
+            alertClass = 'alert-info';
+            icon = 'fas fa-info-circle';
+            break;
+        case 'warning':
+            alertClass = 'alert-warning';
+            icon = 'fas fa-exclamation-triangle';
+            break;
+        default:
+            alertClass = 'alert-info';
+            icon = 'fas fa-info-circle';
+    }
+
+    const notificationHtml = `
+        <div class="alert ${alertClass} alert-dismissible fade show dynamic-notification" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px; max-width: 500px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: none; border-radius: 8px;">
+            <i class="${icon} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+
+    // Thêm thông báo vào body
+    $('body').append(notificationHtml);
+
+    // Tự động ẩn sau 5 giây
+    setTimeout(function() {
+        $('.dynamic-notification').fadeOut(500, function() {
+            $(this).remove();
+        });
+    }, 5000);
+}
+
+// Hàm cập nhật số lượng giỏ hàng
+function updateCartCount(count) {
+    // Cập nhật các element hiển thị số lượng giỏ hàng
+    $('.cart-count').text(count);
+    $('#cart-badge').text(count);
+
+    // Ẩn hiện badge nếu số lượng = 0
+    if (count > 0) {
+        $('.cart-badge').show();
+    } else {
+        $('.cart-badge').hide();
+    }
+}
+
+// Xử lý khi document ready
+$(document).ready(function() {
+    // Xử lý click button close cho các thông báo tĩnh
+    $(document).on('click', '.alert .btn-close', function() {
+        $(this).closest('.alert').fadeOut(300, function() {
+            $(this).remove();
+        });
+    });
+});
+</script>

@@ -1,0 +1,277 @@
+﻿@model IEnumerable<Nhom12_Website_Ban_Cua.Models.EF.SanPham>
+
+@{
+    ViewBag.Title = "DanhSachSP";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mt-4">Danh Sách Sản Phẩm</h3>
+
+            <div class="card-tools">
+                <a href="/Admin/AdminProducts/ThemSPMoi" class="btn btn-primary">Thêm Mới</a>
+                <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa All</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="card-tools">
+                    @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { }))
+                    {
+                        <div class="input-group input-group-sm">
+                            @Html.TextBox("Searchtext", null, new { @class = "form-control" })
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Mã Sản Phẩm</th>
+                        <th>Hình Ảnh</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Loại</th>
+                        <th>SL Đã Bán</th>
+                        <th>SL Tồn</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.MaSP">
+                                <td>@item.MaSP</td>
+                                <td><img class="imgproduct" data-id="@item.MaSP" src="~/Content/img/Anh_Lon/@item.AnhLon" width="50" /></td>
+                                <td>@item.TenSP</td>
+                                <td>@item.Loai.TenLoai</td>
+                                <td><a style="margin:25px;">@item.SoLuongBan</a></td>
+                                <td><a style="margin:25px;">@item.SoLuongTon</a></td>
+                                <td>@FormatCurrency((double)item.Gia)</td>
+                                <td>
+                                    <a href="/Admin/AdminProducts/Sua/@item.MaSP" class="btn btn-sm btn btn-primary">Sửa</a>
+                                    <a href="#" data-id="@item.MaSP" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8">Không Có Bản Ghi Nào</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6" style="text-align:right;">
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<div id="dialog">
+    <iframe id="myIframe" style="border: 0; width: 100%; height: 100%;"></iframe>
+</div>
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            //hiển thị form upload ảnh
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: "fade",
+                hide: "fade",
+                modal: true,
+                height: '600',
+                width: '700',
+                resizable: true,
+                title: 'Quản lý ảnh sản phẩm',
+                close: function () {
+                    window.location.reload();
+                }
+            });
+            $('body').on("click", ".imgproduct", function () {
+                var proid = $(this).attr("data-id");
+                $("#dialog #myIframe").attr("src", "/admin/ProductImage/Index?id=" + proid);
+                $('#dialog').dialog('open');
+                return false;
+            });
+
+
+            $('body').on('click', '#BtnDeleteAll', function (e) {
+                e.preventDefault();
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox');
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                        var _id = $(this).val();
+                        if (i == 0) {
+                            str += _id;
+                        } else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    } else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+                if (str.length > 0) {
+                    var conf = confirm('Bạn có muốn xóa các bản ghi này hay không?');
+                    if (conf === true) {
+                        $.ajax({
+                            url: '/admin/products/deleteAll',
+                            type: 'POST',
+                            data: { ids: str },
+                            success: function (rs) {
+                                if (rs.success) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            $('body').on('change', '#SelectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                    } else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+            });
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data("id");
+                var conf = confirm('Bạn Có Muốn Xóa Bản Ghi Này ?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/Admin/AdminProducts/Xoa',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('body').on('click', '.btnActive', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var id = btn.data("id");
+                var conf = confirm('Bạn Có Muốn Chỉnh Sửa Trạng Thái Này ?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/admin/products/IsActive',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                if (rs.IsActive) {
+                                    btn.html("<i class='fa fa-check text-success'></i>");
+                                }
+                                else {
+                                    btn.html("<i class='fas fa-times text-danger'></i>");
+                                }
+                            }
+
+                        }
+                    });
+                }
+
+            });
+
+            $('body').on('click', '.btnHome', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var id = btn.data("id");
+                var conf = confirm('Bạn Có Muốn Chỉnh Sửa Trạng Thái Này ?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/admin/products/IsHome',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                if (rs.IsHome) {
+                                    btn.html("<i class='fa fa-check text-success'></i>");
+                                }
+                                else {
+                                    btn.html("<i class='fas fa-times text-danger'></i>");
+                                }
+                            }
+
+                        }
+                    });
+                }
+
+            });
+
+            $('body').on('click', '.btnSale', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var id = btn.data("id");
+                var conf = confirm('Bạn Có Muốn Chỉnh Sửa Trạng Thái Này ?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/admin/products/IsSale',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                if (rs.IsSale) {
+                                    btn.html("<i class='fa fa-check text-success'></i>");
+                                }
+                                else {
+                                    btn.html("<i class='fas fa-times text-danger'></i>");
+                                }
+                            }
+
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+}
+

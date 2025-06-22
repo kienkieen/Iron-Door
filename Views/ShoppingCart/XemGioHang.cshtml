@@ -1,0 +1,146 @@
+﻿@using Nhom12_Website_Ban_Cua.Models
+@model GioHang
+
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper FormatCurrency(double input)
+{
+    var formatted = input.ToString("#,0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"));
+    @formatted
+    <text> đ </text>
+}
+
+@{
+    double phiShip = 0;
+    if (Model != null)
+    {
+
+        phiShip = 30000;
+    }
+}
+
+@helper Truncate(string input, int length)
+{
+    if (input.Length < length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)
+        <text>.... </text>
+    }
+}
+
+<!-- Cart Start -->
+
+<div class="container-fluid pt-5 bg-light" style="padding-bottom: 80px; font-family: Arial, Helvetica, sans-serif;">
+    <div class="row px-xl-5">
+        <div class="col-lg-9 col-md-12 mb-4">
+            <div class="table-responsive bg-white ">
+
+                <table class="table table-borderless table-hover text-center mb-0">
+                    <thead style="font-weight: 400; color: black !important; border-bottom: 2px solid #F4F5F8 ">
+                        <tr>
+                            <th style="width: 40%;">Sản Phẩm</th>
+                            <th style="width: 15%;">Giá</th>
+                            <th style="width: 15%;">Số Lượng</th>
+                            <th style="width: 15%;">Tổng</th>
+                            <th style="width: 15%;"></th>
+                        </tr>
+                    </thead>
+                    @if (Model == null || Model.lst.Count == 0)
+                    {
+                        <tr></tr>
+                    }
+                    else
+                    {
+                <tbody>
+                    @foreach (CartItem sp in Model.lst)
+                    {
+                        <tr style="border-bottom: 1px solid #F4F5F8; cursor: pointer;"
+                            onclick="location.href='@Url.Action("ChiTietSanPham", "Products", new { id = @sp.maSP })'">
+                            <td align="left">
+                                <img src="~/Content/img/Anh_Lon/@sp.anhSP" alt="" style="width: 50px;">
+                                @Truncate(sp.tenSP, 35)
+                            </td>
+                            <td class="align-middle">@FormatCurrency(sp.donGia)</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;" data-masp="@sp.maSP">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus"
+                                                onclick="event.stopPropagation(); updateQuantity(this, -1)">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text"
+                                           class="form-control form-control-sm border-0 text-center"
+                                           value="@sp.soLuong"
+                                           data-masp="@sp.maSP"
+                                           onblur="updateQuantityFromInput(this)"
+                                           onclick="event.stopPropagation();">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus"
+                                                onclick="event.stopPropagation(); updateQuantity(this, 1)">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">@FormatCurrency(sp.ThanhTien)</td>
+                            <td class="align-middle">
+                                <div style="display: flex; justify-content: space-between; padding: 0px 35px;">
+                                    <a class="btn btn-sm btn-danger" href="~/ShoppingCart/XoaHang?maSP=@sp.maSP"
+                                       onclick="event.stopPropagation();">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <form action="/ShoppingCart/ThanhToan" method="post" onsubmit="event.stopPropagation();">
+                                        <button class="btn btn-sm btn-primary" style="font-family: 'Oswald'" type="submit">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12">
+            <div class="bg-white p-3">
+                <div class="border-bottom pb-2">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Tiền hàng</h6>
+                        <h6>@FormatCurrency(ViewBag.tongTien)</h6>
+                    </div>
+                    @*<div class="d-flex justify-content-between">
+                        <h6>Phí giao hàng</h6>
+                        <h6>@FormatCurrency(phiShip)</h6>
+                    </div>*@
+                </div>
+                <div class="pt-2">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5>Tổng tiền</h5>
+                        <h5>@FormatCurrency(ViewBag.tongTien)</h5>
+                    </div>
+                    <form action="/ShoppingCart/ThanhToan" method="post">
+                        <button class="btn btn-block btn-primary font-weight-bold my-2 py-3" style="font-family: 'Oswald'; font-size: 20px;">
+                            THANH TOÁN
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart End -->
+<script src="~/Scripts/js/productspage.js?v=@DateTime.Now.Ticks"></script>

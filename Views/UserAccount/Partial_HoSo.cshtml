@@ -1,0 +1,56 @@
+﻿@model Nhom12_Website_Ban_Cua.Models.EF.NguoiDung
+
+@{
+    var emailPattern = "[a-zA-Z0-9._%+-]+@gmail\\.com";
+}
+
+<div id="hoso">
+    <h1 class="position-relative text-uppercase mb-4 text-center" style="border-bottom: 2px solid gray; margin: 10px 330px; padding-bottom: 10px;"><span class="pr-3">HỒ SƠ CỦA TÔI </span></h1>
+    <form id="hosoForm" method="post">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <p class="control-label">Tên</p>
+                <input id="fullname" name="hoten" value="@Model.TenNguoiDung" class="form-control" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <p class="control-label">Email</p>
+                <input id="email" name="email" type="text" value="@Model.Email" class="form-control" pattern="@emailPattern" title="Email phải có dạng @Html.Raw("gmail.com")">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <p class="control-label">Số Điện Thoại</p>
+                <input id="sdt" name="sdt" type="text" class="form-control" required value="@Model.SDT">
+            </div>
+            <div class="form-group col-md-6">
+                <p class="control-label">Địa Chỉ</p>
+                <input id="diachi" name="diachi" type="text" class="form-control" required value="@Model.DiaChi">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <p class="control-label">Tên Tài Khoản</p>
+                <input id="username" name="tentaikhoan" type="text" class="form-control place-holder-light" disabled style="border: 1px solid #b5aec4; background-color: #f3f3f3;" value="@Model.TenTaiKhoan" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <p class="control-label">Mật Khẩu</p>
+                <div class="position-relative">
+                    <input id="matkhau_dk" name="matkhau_dk" type="password" class="form-control place-holder-light" disabled style="border: 1px solid #b5aec4; background-color: #f3f3f3;" required placeholder="*********">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-center">
+            <button class="btn-login form-submit btn-blocker custom-btn mt-3" onclick="updateHoSo(this)" type="button" style="border-radius: unset; margin: 0 auto; width: 150px; background-color: dimgrey; color: white; padding: 10px 20px;">
+                Cập Nhật
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="~/Scripts/js/useraccount.js?v=@DateTime.Now.Ticks"></script>

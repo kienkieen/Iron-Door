@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f05908e70bce41c3861c64dd17739fd1" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="DBBanCuaModel.ChiTietDatHang" Width="1.5" PointX="8" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.DatHang" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.LienHe" Width="1.5" PointX="14.375" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.Loai" Width="1.5" PointX="13.625" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.LoaiNguoiDung" Width="1.5" PointX="0.875" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.NguoiDung" Width="1.5" PointX="4.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.NguoiVanChuyen" Width="1.5" PointX="10.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.PhanQuyen" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.QuyenQuanTri" Width="1.5" PointX="5.375" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.SanPham" Width="1.5" PointX="11.375" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.sysdiagram" Width="1.5" PointX="16.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.TinTuc" Width="1.5" PointX="14.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.TrangThai" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBBanCuaModel.YeuCauHoTro" Width="1.5" PointX="0.875" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="DBBanCuaModel.FK_ChiTietDatHang_DatHang" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_ChiTietDatHang_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_DatHang_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_DatHang_NguoiVanChuyen" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_DatHang_TrangThai" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.PK_SanPham_Loai" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_NguoiDung_LoaiNguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_PhanQuyen_LoaiNguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_YeuCauHoTro_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_PhanQuyen_QuyenQuanTri" ManuallyRouted="false" />
+        <AssociationConnector Association="DBBanCuaModel.FK_YeuCauHoTro_TrangThai" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

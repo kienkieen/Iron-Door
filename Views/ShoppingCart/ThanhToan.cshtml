@@ -1,0 +1,91 @@
+﻿
+@model Nhom12_Website_Ban_Cua.Models.GioHang
+
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+else
+{
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+    <div class="container product_section_container">
+        <div class="row">
+            <div class="col product_section clearfix">
+
+                <!-- Sidebar -->
+                <!-- Main Content -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center mt-4">
+                        <h1 class="">THANH TOÁN</h1>
+                        <p>Bạn hãy kiểm tra lại thông tin đơn hàng cho chính xác!</p>
+                    </div>
+
+                </div>
+                <hr />
+                @if (ViewBag.CheckCart == null)
+                {
+
+                    <div class="row" style="margin-bottom: 100px; align-items: stretch;">
+                        <div class="col-lg-6 col-md-12 mb-5">
+                            <div class="p-2 col-12 bg-white sdb-4">
+                                <div id="show_success"></div>
+                                <div class="p-5" style="">
+                                    <h3>Thông tin khách hàng</h3>
+                                    <form action="/ShoppingCart/XacNhanThanhToan" method="post">
+                                        <div class="form-group">
+                                            <label>Họ tên khách hàng</label>
+                                            <input type="text" name="hotenk" required class="form-control" autocomplete="off" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Địa chỉ</label>
+                                            <input type="text" name="diachi" class="form-control" autocomplete="off" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Phương thức thanh toán</label><br />
+                                            <label><input type="radio" name="PTTT" value="1" required /> Tiền mặt</label><br />
+                                            <label><input type="radio" name="PTTT" value="2" /> Thẻ tín dụng</label><br />
+                                            <label><input type="radio" name="PTTT" value="3" /> Thẻ ghi nợ</label><br />
+                                            <label><input type="radio" name="PTTT" value="4" /> PayPal</label><br />
+                                        </div>
+                                        <div class="form-group" id="load_send"></div>
+
+                                        <div class="form-group">
+                                                <button type="submit" class="btn btn-block btn-primary" id="btnCheckOut" onclick="return confirm('Bạn có chắc chắn muốn thanh toán?');">Đặt hàng</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12">
+                            <div class="p-3 bg-white  sdb-4" style="max-height: 637px; overflow-y: auto;">
+                                @Html.Action("_Partial_GioHang", "ShoppingCart")
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        Bạn chưa có sản phẩm nào. Vui long quay lại trang <a href="/san-pham">sản phẩm</a> để mua hàng.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
